@@ -1,0 +1,20 @@
+//normalize import from node_modules
+@import "../../node_modules/normalize.css/normalize";
+
+body {
+	font-family: Lato, sans-serif;
+}
+
+#app1 {
+	display: block;
+	width: 960px;
+	margin: 0 auto;
+	padding-top: 20px;
+	li {
+		list-style-type: none;
+	}
+}
+
+.deleted {
+	text-decoration: line-through;
+}
