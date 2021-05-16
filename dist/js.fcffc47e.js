@@ -12338,7 +12338,7 @@ var Todo = /*#__PURE__*/function () {
         element.onclick = function (e) {
           var text = element.parentElement.children[2].textContent;
           e.currentTarget.parentElement.remove();
-          todoApp1.removeTodo(text); //console.log(todoApp1);
+          todoApp1.removeTodo(text);
         };
       });
     } //metoda obslugi przycisku Gotowe
@@ -12357,6 +12357,11 @@ var Todo = /*#__PURE__*/function () {
         };
       });
     }
+  }, {
+    key: "taskList",
+    get: function get() {
+      return this.todos;
+    }
   }], [{
     key: "addTodoEl",
     value: function addTodoEl(text, todoEl) {
@@ -12367,7 +12372,7 @@ var Todo = /*#__PURE__*/function () {
       buttonDel.textContent = "X";
       buttonMark.textContent = "Gotowe";
       li.prepend(buttonMark, buttonDel);
-      todoEl && todoEl.appendChild(li); //handler
+      todoEl && todoEl.appendChild(li); //handler init
 
       todoApp1.delButtonHandler();
       todoApp1.marlButtonhandler();
@@ -12386,11 +12391,23 @@ var Todo = /*#__PURE__*/function () {
   }]);
 
   return Todo;
-}(); // buttonMark.onclick = function (event) {
-//     //oznaczanie jako gotowe
-//     event.currentTarget.parentElement.classList.toggle("deleted");
-// };
+}();
 
+var buttonShow = document.getElementById("show");
+
+buttonShow.onclick = function (e) {
+  var pShowEl = document.getElementById("show-window");
+  pShowEl.textContent = console.log(todoApp1.taskList);
+};
+
+var buttonAdd = document.getElementById("addTodoButton");
+
+buttonAdd.onclick = function (e) {
+  var textEl = document.getElementById("addTodoText");
+  var todo = textEl.value.trim();
+  Todo.addTodoEl(todo, appEl);
+  todoApp1.addTodo(todo);
+};
 
 var todoApp1 = new Todo(); // stworzenie instancji Todo
 
@@ -12398,7 +12415,8 @@ var appEl = document.getElementById("app1");
 Todo.addTodoEl("Zadanie pierwsze", appEl);
 todoApp1.addTodo("Zadanie pierwsze");
 Todo.addTodoEl("Zadanie drugie", appEl);
-todoApp1.addTodo("Zadanie drugie"); // todoApp1.delButtonHandler();
+todoApp1.addTodo("Zadanie drugie");
+console.log(todoApp1.taskList); // todoApp1.delButtonHandler();
 },{"core-js/stable":"../../node_modules/core-js/stable/index.js","regenerator-runtime/runtime":"../../node_modules/regenerator-runtime/runtime.js"}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -12427,7 +12445,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "5432" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "9751" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

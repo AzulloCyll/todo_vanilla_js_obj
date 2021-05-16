@@ -19,7 +19,7 @@ class Todo {
         li.prepend(buttonMark, buttonDel);
         todoEl && todoEl.appendChild(li);
 
-        //handler
+        //handler init
         todoApp1.delButtonHandler();
         todoApp1.marlButtonhandler();
         return li;
@@ -56,7 +56,6 @@ class Todo {
                 let text = element.parentElement.children[2].textContent;
                 e.currentTarget.parentElement.remove();
                 todoApp1.removeTodo(text);
-                //console.log(todoApp1);
             };
         });
     }
@@ -70,13 +69,23 @@ class Todo {
             element.onclick = function (e) { e.currentTarget.parentElement.classList.toggle("deleted"); };
         });
     }
+
+    get taskList() { return this.todos; }
 }
 
+const buttonShow = document.getElementById("show");
+buttonShow.onclick = function (e) {
+    const pShowEl = document.getElementById("show-window");
+    pShowEl.textContent = console.log(todoApp1.taskList);
+};
 
-// buttonMark.onclick = function (event) {
-//     //oznaczanie jako gotowe
-//     event.currentTarget.parentElement.classList.toggle("deleted");
-// };
+const buttonAdd = document.getElementById("addTodoButton");
+buttonAdd.onclick = function (e) {
+    const textEl = document.getElementById("addTodoText");
+    const todo = textEl.value.trim();
+    Todo.addTodoEl(todo, appEl);
+    todoApp1.addTodo(todo);
+};
 
 const todoApp1 = new Todo; // stworzenie instancji Todo
 const appEl = document.getElementById("app1");
@@ -86,6 +95,8 @@ Todo.addTodoEl("Zadanie pierwsze", appEl);
 todoApp1.addTodo("Zadanie pierwsze");
 Todo.addTodoEl("Zadanie drugie", appEl);
 todoApp1.addTodo("Zadanie drugie");
+
+console.log(todoApp1.taskList);
 
 // todoApp1.delButtonHandler();
 
