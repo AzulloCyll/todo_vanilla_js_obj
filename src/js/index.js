@@ -79,10 +79,10 @@ class Todo {
             this.todos = value;
         }
 
-        this.todos.map((i) => todoApp1.addTodo(i, this.todoEl));
+        this.todos.map((i) => Todo.addTodoEl(i, this.todoEl));
     }
 
-    sortList(value) {
+    sortList(val) {
         let todos = Array.from(this.todos);
         let lis = document.getElementsByTagName("li");
         while (lis.length > 0) {
@@ -90,7 +90,7 @@ class Todo {
         }
         this.todos = [];
 
-        switch (value) {
+        switch (val) {
             case "az":
                 todos = todos.sort((a, b) => a.localeCompare(b));
                 this.todos = todos;
@@ -103,20 +103,19 @@ class Todo {
                 break;
         }
     };
+    showList() {
+        for (let todo in this.todos) {
+            Todo.addTodoEl(this.todos[todo], appEl);
+        };
+
+    }
 }
 
-//pomocnicza
-function showList(app) {
-    for (let i = 0; i < app.todos.length; i++) {
-        Todo.addTodoEl(app.todos[i], appEl);
-    };
-}
-
-// const buttonShow = document.getElementById("show");
-// buttonShow.onclick = function (e) {
-//     const pShowEl = document.getElementById("show-window");
-//     pShowEl.textContent = console.log(todoApp1.taskList);
-// };
+const buttonShow = document.getElementById("show");
+buttonShow.onclick = function (e) {
+    const pShowEl = document.getElementById("show-window");
+    pShowEl.textContent = console.log(todoApp1.taskList);
+};
 
 const buttonAdd = document.getElementById("addTodoButton");
 buttonAdd.onclick = function (e) {
@@ -129,25 +128,21 @@ buttonAdd.onclick = function (e) {
 const buttonAZ = document.getElementsByClassName("az")[0];
 buttonAZ.onclick = function (e) {
     todoApp1.sortList("az");
-    showList(todoApp1);
+    todoApp1.showList();
 };
 
 const buttonZA = document.getElementsByClassName("za")[0];
 buttonZA.onclick = function (e) {
     todoApp1.sortList("za");
-    showList(todoApp1);
+    todoApp1.showList();
 };
 
 const todoApp1 = new Todo; // stworzenie instancji Todo
 const appEl = document.getElementById("app1");
 
+//początkowe wartości
+todoApp1.taskList = ["Zadanie pierwsze", "Zadanie drugie", "Zadanie trzecie"];
+todoApp1.showList();
 
-Todo.addTodoEl("Zadanie pierwsze", appEl);
-todoApp1.addTodo("Zadanie pierwsze");
-Todo.addTodoEl("Zadanie drugie", appEl);
-todoApp1.addTodo("Zadanie drugie");
 
-console.log(todoApp1.taskList);
-
-// todoApp1.delButtonHandler();
 

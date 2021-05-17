@@ -12384,12 +12384,12 @@ var Todo = /*#__PURE__*/function () {
       }
 
       this.todos.map(function (i) {
-        return todoApp1.addTodo(i, _this.todoEl);
+        return Todo.addTodoEl(i, _this.todoEl);
       });
     }
   }, {
     key: "sortList",
-    value: function sortList(value) {
+    value: function sortList(val) {
       var todos = Array.from(this.todos);
       var lis = document.getElementsByTagName("li");
 
@@ -12399,7 +12399,7 @@ var Todo = /*#__PURE__*/function () {
 
       this.todos = [];
 
-      switch (value) {
+      switch (val) {
         case "az":
           todos = todos.sort(function (a, b) {
             return a.localeCompare(b);
@@ -12416,6 +12416,15 @@ var Todo = /*#__PURE__*/function () {
           return this.todos;
           break;
       }
+    }
+  }, {
+    key: "showList",
+    value: function showList() {
+      for (var todo in this.todos) {
+        Todo.addTodoEl(this.todos[todo], appEl);
+      }
+
+      ;
     }
   }], [{
     key: "addTodoEl",
@@ -12446,21 +12455,14 @@ var Todo = /*#__PURE__*/function () {
   }]);
 
   return Todo;
-}(); //pomocnicza
+}();
 
+var buttonShow = document.getElementById("show");
 
-function showList(app) {
-  for (var i = 0; i < app.todos.length; i++) {
-    Todo.addTodoEl(app.todos[i], appEl);
-  }
-
-  ;
-} // const buttonShow = document.getElementById("show");
-// buttonShow.onclick = function (e) {
-//     const pShowEl = document.getElementById("show-window");
-//     pShowEl.textContent = console.log(todoApp1.taskList);
-// };
-
+buttonShow.onclick = function (e) {
+  var pShowEl = document.getElementById("show-window");
+  pShowEl.textContent = console.log(todoApp1.taskList);
+};
 
 var buttonAdd = document.getElementById("addTodoButton");
 
@@ -12475,24 +12477,22 @@ var buttonAZ = document.getElementsByClassName("az")[0];
 
 buttonAZ.onclick = function (e) {
   todoApp1.sortList("az");
-  showList(todoApp1);
+  todoApp1.showList();
 };
 
 var buttonZA = document.getElementsByClassName("za")[0];
 
 buttonZA.onclick = function (e) {
   todoApp1.sortList("za");
-  showList(todoApp1);
+  todoApp1.showList();
 };
 
 var todoApp1 = new Todo(); // stworzenie instancji Todo
 
-var appEl = document.getElementById("app1");
-Todo.addTodoEl("Zadanie pierwsze", appEl);
-todoApp1.addTodo("Zadanie pierwsze");
-Todo.addTodoEl("Zadanie drugie", appEl);
-todoApp1.addTodo("Zadanie drugie");
-console.log(todoApp1.taskList); // todoApp1.delButtonHandler();
+var appEl = document.getElementById("app1"); //początkowe wartości
+
+todoApp1.taskList = ["Zadanie pierwsze", "Zadanie drugie", "Zadanie trzecie"];
+todoApp1.showList();
 },{"core-js/stable":"../../node_modules/core-js/stable/index.js","regenerator-runtime/runtime":"../../node_modules/regenerator-runtime/runtime.js"}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -12521,7 +12521,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "3686" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "5871" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
