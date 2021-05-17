@@ -12293,6 +12293,18 @@ require("core-js/stable");
 
 require("regenerator-runtime/runtime");
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -12361,6 +12373,49 @@ var Todo = /*#__PURE__*/function () {
     key: "taskList",
     get: function get() {
       return this.todos;
+    },
+    set: function set(value) {
+      var _this = this;
+
+      if (this.todos) {
+        this.todos = [].concat(_toConsumableArray(this.todos), _toConsumableArray(value));
+      } else {
+        this.todos = value;
+      }
+
+      this.todos.map(function (i) {
+        return todoApp1.addTodo(i, _this.todoEl);
+      });
+    }
+  }, {
+    key: "sortList",
+    value: function sortList(value) {
+      var todos = Array.from(this.todos);
+      var lis = document.getElementsByTagName("li");
+
+      while (lis.length > 0) {
+        lis[0].remove();
+      }
+
+      this.todos = [];
+
+      switch (value) {
+        case "az":
+          todos = todos.sort(function (a, b) {
+            return a.localeCompare(b);
+          });
+          this.todos = todos;
+          return this.todos;
+          break;
+
+        case "za":
+          todos = todos.sort(function (a, b) {
+            return b.localeCompare(a);
+          });
+          this.todos = todos;
+          return this.todos;
+          break;
+      }
     }
   }], [{
     key: "addTodoEl",
@@ -12391,14 +12446,21 @@ var Todo = /*#__PURE__*/function () {
   }]);
 
   return Todo;
-}();
+}(); //pomocnicza
 
-var buttonShow = document.getElementById("show");
 
-buttonShow.onclick = function (e) {
-  var pShowEl = document.getElementById("show-window");
-  pShowEl.textContent = console.log(todoApp1.taskList);
-};
+function showList(app) {
+  for (var i = 0; i < app.todos.length; i++) {
+    Todo.addTodoEl(app.todos[i], appEl);
+  }
+
+  ;
+} // const buttonShow = document.getElementById("show");
+// buttonShow.onclick = function (e) {
+//     const pShowEl = document.getElementById("show-window");
+//     pShowEl.textContent = console.log(todoApp1.taskList);
+// };
+
 
 var buttonAdd = document.getElementById("addTodoButton");
 
@@ -12407,6 +12469,20 @@ buttonAdd.onclick = function (e) {
   var todo = textEl.value.trim();
   Todo.addTodoEl(todo, appEl);
   todoApp1.addTodo(todo);
+};
+
+var buttonAZ = document.getElementsByClassName("az")[0];
+
+buttonAZ.onclick = function (e) {
+  todoApp1.sortList("az");
+  showList(todoApp1);
+};
+
+var buttonZA = document.getElementsByClassName("za")[0];
+
+buttonZA.onclick = function (e) {
+  todoApp1.sortList("za");
+  showList(todoApp1);
 };
 
 var todoApp1 = new Todo(); // stworzenie instancji Todo
@@ -12445,7 +12521,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "9751" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "3686" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

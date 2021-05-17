@@ -5,11 +5,14 @@ body {
 	font-family: Lato, sans-serif;
 }
 
-#app1 {
+main {
 	display: block;
 	width: 960px;
 	margin: 0 auto;
 	padding-top: 20px;
+}
+
+#app1 {
 	li {
 		list-style-type: none;
 	}

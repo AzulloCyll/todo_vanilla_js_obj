@@ -71,13 +71,52 @@ class Todo {
     }
 
     get taskList() { return this.todos; }
+
+    set taskList(value) {
+        if (this.todos) {
+            this.todos = [...this.todos, ...value];
+        } else {
+            this.todos = value;
+        }
+
+        this.todos.map((i) => todoApp1.addTodo(i, this.todoEl));
+    }
+
+    sortList(value) {
+        let todos = Array.from(this.todos);
+        let lis = document.getElementsByTagName("li");
+        while (lis.length > 0) {
+            lis[0].remove();
+        }
+        this.todos = [];
+
+        switch (value) {
+            case "az":
+                todos = todos.sort((a, b) => a.localeCompare(b));
+                this.todos = todos;
+                return this.todos;
+                break;
+            case "za":
+                todos = todos.sort((a, b) => b.localeCompare(a));
+                this.todos = todos;
+                return this.todos;
+                break;
+        }
+    };
 }
 
-const buttonShow = document.getElementById("show");
-buttonShow.onclick = function (e) {
-    const pShowEl = document.getElementById("show-window");
-    pShowEl.textContent = console.log(todoApp1.taskList);
-};
+//pomocnicza
+function showList(app) {
+    for (let i = 0; i < app.todos.length; i++) {
+        Todo.addTodoEl(app.todos[i], appEl);
+    };
+}
+
+// const buttonShow = document.getElementById("show");
+// buttonShow.onclick = function (e) {
+//     const pShowEl = document.getElementById("show-window");
+//     pShowEl.textContent = console.log(todoApp1.taskList);
+// };
 
 const buttonAdd = document.getElementById("addTodoButton");
 buttonAdd.onclick = function (e) {
@@ -85,6 +124,18 @@ buttonAdd.onclick = function (e) {
     const todo = textEl.value.trim();
     Todo.addTodoEl(todo, appEl);
     todoApp1.addTodo(todo);
+};
+
+const buttonAZ = document.getElementsByClassName("az")[0];
+buttonAZ.onclick = function (e) {
+    todoApp1.sortList("az");
+    showList(todoApp1);
+};
+
+const buttonZA = document.getElementsByClassName("za")[0];
+buttonZA.onclick = function (e) {
+    todoApp1.sortList("za");
+    showList(todoApp1);
 };
 
 const todoApp1 = new Todo; // stworzenie instancji Todo
